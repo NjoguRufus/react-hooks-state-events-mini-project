@@ -1,18 +1,12 @@
 {
-  "name": "react-hooks-state-events-mini-project",
+  "name": "react-hooks-forms-lab",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "^5.0.1"
-  },
-  "devDependencies": {
-    "@learn-co-curriculum/jest-learn-reporter": "^0.1.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "mocha": "^8.2.1"
+    "react-scripts": "^5.0.1",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -22,7 +16,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app"
+      "react-app",
+      "react-app/jest"
     ]
   },
   "browserslist": {
@@ -36,5 +31,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@learn-co-curriculum/jest-learn-reporter": "^0.1.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "mocha": "^8.2.1"
   }
 }

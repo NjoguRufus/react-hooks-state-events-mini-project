@@ -1,19 +1,23 @@
-import React from "react";
-import CategoryFilter from "./CategoryFilter";
-import NewTaskForm from "./NewTaskForm";
-import TaskList from "./TaskList";
-
-import { CATEGORIES, TASKS } from "../data";
-console.log("Here's the data you're working with");
-console.log({ CATEGORIES, TASKS });
+import React, { useState } from "react";
+import ShoppingList from "./ShoppingList";
+import Header from "./Header";
+import itemData from "../data/items";
 
 function App() {
+  const [items, setItems] = useState(itemData);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  function handleDarkModeClick() {
+    setIsDarkMode((isDarkMode) => !isDarkMode);
+  }
+
+  function handleItemFormSubmit(newItem) {
+    setItems([...items, newItem]);
+  }
   return (
-    <div className="App">
-      <h2>My tasks</h2>
-      <CategoryFilter />
-      <NewTaskForm />
-      <TaskList />
+    <div className={"App " + (isDarkMode ? "dark" : "light")}>
+      <Header isDarkMode={isDarkMode} onDarkModeClick={handleDarkModeClick} />
+      <ShoppingList items={items} onItemFormSubmit ={handleItemFormSubmit}/>
     </div>
   );
 }

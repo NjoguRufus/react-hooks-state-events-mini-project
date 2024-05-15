@@ -1,61 +1,95 @@
-# Putting it All Together: State and Events
+# React Controlled Components Lab
 
 ## Learning Goals
 
-- Use state and events to make components dynamic
-- Implement controlled components
+- Implement a controlled form
 
 ## Introduction
 
-To build on what you've learned over the course of this section, we'll be
-building out a simple task list app to practice working with state and events,
-focusing in particular on working with arrays.
+In this lab, you'll write and use controlled components.
+
+## Controlled Components
+
+Now that we know how to handle form elements in React and how to set up
+controlled components, it's time to put that knowledge to the test. This lab is
+fairly extensive, but you'll use many core React concepts here that will surface
+again and again. Time to get some practice in!
+
+We'll continue adding new features to the Shopping List app using controlled
+components. Make sure to familiarize yourself with the code before diving into
+the deliverables! Completing these deliverables will also require understanding
+of all the previous topics from this section, including initializing state,
+passing data and callback functions as props, and working with events.
 
 ## Deliverables
 
-There is some starter code built out for all of the components you'll need. The
-data for the application is imported in `App`, so you'll need to pass that data
-down to the components that need it as props.
+### Filter
 
-Run `npm install` and `npm start`, then check out the starter code in the
-browser. You'll see a console message with the `TASK` and `CATEGORY` data you'll
-need to pass down from `App`.
+In the filter component, there is a new input field for searching our list.
+_When the user types in this field_, the list of items should be filtered so
+that only items with names that match the text are included.
 
-### TaskList
+- Determine where you need to add state for this feature. What components need
+  to know about the search text?
 
-First, we'll want to display all the tasks in our app. Pass down the task data
-from `App` to `TaskList`, and display each task using the `Task` component. Make
-sure to use a `key` prop!
+- Once you've determined which component should hold the state for this feature,
+  set up your initial state, and connect that state to the input field.
+  Remember, we're trying to make this input a _controlled_ input — so the
+  input's value should always be in sync with state.
 
-### Task
+- After you've connected the input to state, you'll also need to find a way to
+  _set_ state when the input _changes_. To get the test passing, you'll need to
+  use a prop called `onSearchChange` as a callback.
 
-Update the `Task` component so that it shows the task's text and category.
+- Finally, after making those changes, you'll need to use that state value to
+  determine which items are being displayed on the page, similar to how the
+  category dropdown works.
 
-_When the delete button is clicked_, the task should be removed from the list.
+**Note**: you may be asking yourself, why are we making this input controlled
+when the `<select>` element is not a controlled input? Well, the `<select>`
+input should probably be controlled as well! The tests don't require it, but
+feel free to update the `<select>` element to be a controlled element.
 
-### CategoryFilter
+### ItemForm
 
-Pass the list of categories to this component from `App`. Then, update this
-component to display `<button>` elements for each category. In order to pass the test, the buttons will need a key prop equal to the category.
+There is a new component called `ItemForm` that will allow us to add new items
+to our shopping list. _When the form is submitted_, a new item should be created
+and added to our list of items.
 
-_When a button is clicked_, the following should happen:
+- Make all the input fields for this form controlled inputs, so that you can
+  access all the form data via state. When setting the initial state for the
+  `<select>` tag, use an initial value of "Produce" (since that's the first
+  option in the list).
 
-- Whichever button was clicked should have a class of `selected`. The other
-  buttons should not have any class assigned.
-- The list of tasks being displayed should be filtered, so that only tasks that
-  match the category that was clicked are displayed.
-- If the button for "All" is selected, all the tasks should be displayed.
+- Handle the form's _submit_ event, and use the data that you have saved in
+  state to create a new item object with the following properties:
 
-### NewTaskForm
+  ```jsx
+  const newItem = {
+    id: uuid(), // the `uuid` library can be used to generate a unique id
+    name: itemName,
+    category: itemCategory,
+  };
+  ```
 
-Pass the list of categories to this component from `App`. Then, update this
-component to display `<option>` elements for each category inside of the
-`<select>` element **except** the "All" category, so that the user can select a
-category when adding a new task.
+- Add the new item to the list by updating state. To get the test passing,
+  you'll need to use a prop called `onItemFormSubmit` as a callback and pass the
+  new item to it.
 
-Next, update this form to be a _controlled component_, so that all form inputs
-are captured in state.
+  **NOTE**: to add a new element to an array in state, it's a good idea to use
+  the spread operator:
 
-_When the form is submitted_, add a new task to the list with the text and
-category from the form. For the tests for this feature to pass, you'll need a
-callback prop named `onTaskFormSubmit` that takes a task object as an argument.
+  ```jsx
+  function addElement(element) {
+    setArray([...array, element]);
+  }
+  ```
+
+  The spread operator allows us to copy all the old values of an array into a
+  new array, and then add new elements as well. When you're working with state,
+  it's important to pass a _new_ array to the state setter function instead of
+  mutating the original array.
+
+## Resources
+
+- [React Forms](https://facebook.github.io/react/docs/forms.html)
